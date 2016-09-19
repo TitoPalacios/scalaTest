@@ -4,6 +4,7 @@
   * Sandbox to play with iText and Scala
   */
 import java.io.{FileOutputStream, IOException}
+import java.util
 
 import com.itextpdf.text.Font.FontFamily
 import com.itextpdf.text._
@@ -36,9 +37,12 @@ object pdfTest1 {
     val table = new PdfPTable(3)
     val cell1 = new PdfPCell(new Phrase("Cell with colspan 3"))
     cell1.setColspan(3)
+    cell1.setBorderWidth(0)
+    cell1.setBorderWidthBottom(2)
     table.addCell(cell1)
     val cell2 = new PdfPCell(new Phrase("Cell with rowspan 2"))
     cell2.setRowspan(2)
+    cell2.setBorder(0)
     table.addCell(cell2)
 
     table.addCell("row 1; cell 1")
@@ -46,26 +50,41 @@ object pdfTest1 {
     table.addCell("row 2; cell 1")
     table.addCell("row 2; cell 2")
 
-    val table2 = new PdfPTable(4)
-    val text = new Phrase("Special2")
+    val columnWidths = Array[Float](5,10,50,35)
+    val table2 = new PdfPTable(columnWidths)
+    table2.setWidthPercentage(100)
+
     val myFont = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.WHITE)
+    val text = new Chunk("100", myFont)
 
-    //text.setFont(myFont)
-    text.setFont(new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.WHITE))
-    val cell3 = new PdfPCell(text)
-    cell3.setBorder(3)
-    cell3.setPadding(5)
-    cell3.setBorderColor(BaseColor.RED)
-    cell3.setBackgroundColor(BaseColor.BLUE)
+    val cell31 = new PdfPCell(new Phrase(text))
+    cell31.setBorder(3)
+    cell31.setPadding(5)
+    cell31.setBorderColor(BaseColor.RED)
+    cell31.setBackgroundColor(BaseColor.BLUE)
+    cell31.setHorizontalAlignment(Element.ALIGN_CENTER)
+    cell31.setVerticalAlignment(Element.ALIGN_MIDDLE)
+    val cell32 = new PdfPCell(new Phrase(" "))
+    cell32.setBorder(0)
+    val cell33 = new PdfPCell(new Phrase(" This is another text "))
+    cell33.setBorder(0)
+    val cell34 = new PdfPCell(new Phrase(" But the end "))
+    cell34.setBorder(0)
 
+    table2.addCell(cell32)
+    table2.addCell(cell31)
+    table2.addCell(cell33)
+    table2.addCell(cell34)
 
-    table2.addCell("col1")
-    table2.addCell(cell3)
-    table2.addCell("col3")
-    table2.addCell("col4")
     val cell4 = new PdfPCell(table2)
+    cell4.setBorder(0)
     cell4.setColspan(3)
     table.addCell(cell4)
+
+    table.addCell("Another Cell")
+    table.addCell("...and other")
+    table.addCell(" one more")
+
 
     document.open()
 
