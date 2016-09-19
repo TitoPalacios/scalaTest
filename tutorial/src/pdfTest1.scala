@@ -5,9 +5,12 @@
   */
 import java.io.{FileOutputStream, IOException}
 
+import com.itextpdf.text.Font.FontFamily
 import com.itextpdf.text._
-import com.itextpdf.text.pdf.PdfPageLabels.PdfPageLabelFormat
-import com.itextpdf.text.pdf.{PdfPCell, PdfPTable, PdfWriter}
+import com.itextpdf.text.pdf.PdfPCell
+import com.itextpdf.text.pdf.PdfPTable
+import com.itextpdf.text.pdf.PdfWriter
+import com.itextpdf.text.pdf.PdfFont
 
 
 object pdfTest1 {
@@ -44,13 +47,15 @@ object pdfTest1 {
     table.addCell("row 2; cell 2")
 
     val table2 = new PdfPTable(4)
-    val text = new Phrase("Special")
+    val text = new Phrase("Special2")
+    val myFont = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.WHITE)
 
-    //text.setFont()
-    //text.setFont(new Font("Helvetica"))
+    //text.setFont(myFont)
+    text.setFont(new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.WHITE))
     val cell3 = new PdfPCell(text)
-    cell3.setBorder(1)
-    cell3.setBorderColor(BaseColor.WHITE)
+    cell3.setBorder(3)
+    cell3.setPadding(5)
+    cell3.setBorderColor(BaseColor.RED)
     cell3.setBackgroundColor(BaseColor.BLUE)
 
 
