@@ -87,9 +87,7 @@ object pdfTest1 {
 
 
     document.open()
-
     document.add(table)
-
     document.close()
   }
 
